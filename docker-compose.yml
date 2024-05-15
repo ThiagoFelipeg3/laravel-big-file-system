@@ -1,0 +1,14 @@
+services:
+
+  laravel-file-system:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: file-system
+    volumes:
+        - ./:/var/www/app
+    ports:
+      - "8000:80"
+      
+  db:
+    
