@@ -27,7 +27,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY ./docker/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # COPY ./docker/supervisord/conf /etc/supervisord.d
 
-COPY ./docker/php/php.ini "$PHP_INI_DIR/99_extra.ini"
+COPY ./docker/php/php.ini "$PHP_INI_DIR/php.ini"
 COPY ./docker/php/php-fpm.conf /etc/php8/php-fpm.d/www.conf
 COPY . $APP_DIR
 

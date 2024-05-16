@@ -9,6 +9,4 @@ services:
         - ./:/var/www/app
     ports:
       - "8000:80"
-      
-  db:
-    
+
