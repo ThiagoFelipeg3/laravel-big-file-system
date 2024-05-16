@@ -29,7 +29,7 @@ class ProcessFilesJob implements ShouldQueue
     public function handle(ProcessFilesService $fileService): void
     {
         $fileService->exec($this->filePath, function (array $billingList) {
-            ProcessChunkJob::dispatch($billingList);
-        }, 500);
+            ProcessChunkJob::dispatch($billingList)->onQueue('process_chunk');
+        });
     }
 }

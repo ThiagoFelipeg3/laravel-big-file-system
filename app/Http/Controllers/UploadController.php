@@ -15,7 +15,7 @@ class UploadController extends Controller
         try {
             $file = $request->file('file');
             Storage::put("files", $file);
-            ProcessFilesJob::dispatch(storage_path('app/files/').$file->hashName());
+            ProcessFilesJob::dispatch(storage_path('app/files/').$file->hashName())->onQueue('process_files');
 
             return response()->json([
                 $file->hashName()
