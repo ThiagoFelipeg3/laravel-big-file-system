@@ -9,4 +9,22 @@ services:
         - ./:/var/www/app
     ports:
       - "8000:80"
+    networks:
+      file_system_network:
+        ipv4_address: 172.21.0.97
 
+  redis:
+    image: "redis:alpine"
+    restart: always
+    container_name: redis-file-system
+    networks:
+      file_system_network:
+        ipv4_address: 172.21.0.100
+
+networks:
+  file_system_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.21.0.0/24
