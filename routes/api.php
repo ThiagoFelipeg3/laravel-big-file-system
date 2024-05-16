@@ -8,4 +8,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-// Route::post('upload', App\Http\Controllers\UploadController::class)->name('upload');
+Route::post('upload', App\Http\Controllers\UploadController::class)->name('upload');
