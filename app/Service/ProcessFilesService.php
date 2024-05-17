@@ -3,7 +3,7 @@
 namespace App\Service;
 
 class ProcessFilesService {
-    public function exec(string $filePath, Callable $callback, int $chunkSize = 100000)
+    public function exec(string $filePath, $callback, int $chunkSize = 100000)
     {
         try {
             $handle = fopen($filePath, "r");
@@ -23,8 +23,6 @@ class ProcessFilesService {
             fclose($handle);
 
         } catch (\Exception $e) {
-            trigger_error("file_get_contents_chunked::" . $e->getMessage(), E_USER_NOTICE);
-
             fclose($handle);
         }
     }
