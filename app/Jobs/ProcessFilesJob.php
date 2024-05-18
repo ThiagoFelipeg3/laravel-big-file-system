@@ -13,14 +13,12 @@ class ProcessFilesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $filePath;
-
     /**
      * Create a new job instance.
      */
-    public function __construct(string $filePath)
+    public function __construct(private string $filePath)
     {
-        $this->filePath = $filePath;
+        $this->onQueue('process_files');
     }
 
     /**
@@ -29,7 +27,8 @@ class ProcessFilesJob implements ShouldQueue
     public function handle(ProcessFilesService $fileService): void
     {
         $fileService->exec($this->filePath, function (array $billingList) {
-            ProcessChunkJob::dispatch($billingList)->onQueue('process_chunk');
+            ProcessChunkJob::dispatch($billingList);
         });
     }
 }
+
