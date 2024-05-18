@@ -14,18 +14,25 @@ class ProcessChunkJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $list;
-
-    public function __construct($list)
+    public function __construct(private $debtors)
     {
-        $this->list = $list;
+        $this->onQueue('process_chunk');
     }
 
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
+    public function handle(BillingEmailService $billingEmail): void
     {
-        Log::debug('Lista de Nome e Email', $this->list);
+        try {
+            foreach ($this->debtors as $debtor) {
+                [ $name, $governmentId, $email, $debtAmount, $debtDueDate, $debtId ] = explode(',', $debtor);
+
+                $billingEmail->send($name, $email, $debtAmount, $debtDueDate);
+                // Log::info($response);
+            }
+        } catch (\Exception $error) {
+            Log::error("Message: ". $error->getMessage(), [
+                $error->getFile(),
+                $error->getLine(),
+            ]);
+        }
     }
 }

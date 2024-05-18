@@ -2,7 +2,8 @@
 
 namespace App\Service;
 
-class ProcessFilesService {
+class ProcessFilesService
+{
     public function exec(string $filePath, $callback, int $chunkSize = 100000)
     {
         $handle = fopen($filePath, "r");
