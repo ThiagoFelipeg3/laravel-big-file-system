@@ -58,4 +58,21 @@ class UploadControllerTest extends TestCase
         $this->assertIsString($response->message);
         $this->assertEquals($messageError, $response->message);
     }
+
+    public function testShouldReturnTheNameFile()
+    {
+        Storage::fake('test');
+
+        $nameFile = 'index.csv';
+        $uploadController = new UploadController();
+        $request = new Uploadfile();
+        $file = UploadedFile::fake()->create($nameFile);
+		$request->files->set('file', $file);
+        $response = $uploadController->upload($request)->getData();
+
+        Storage::disk('local')->assertExists('files/'.$file->hashName());
+        Storage::disk('local')->delete('files/'.$file->hashName());
+
+        $this->assertEquals($nameFile, $response->name);
+    }
 }
