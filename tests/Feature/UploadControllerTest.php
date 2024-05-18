@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Http\Controllers\UploadController;
 use App\Http\Requests\Uploadfile;
 use App\Jobs\ProcessFilesJob;
+use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Queue;
@@ -39,5 +40,23 @@ class UploadControllerTest extends TestCase
 
         Storage::disk('local')->assertExists('files/'.$file->hashName());
         Storage::disk('local')->delete('files/'.$file->hashName());
+    }
+
+    public function testShouldReturnMessageError(): void
+    {
+        $messageError = 'Any Error!';
+        $uploadController = new UploadController();
+        $uploadFile = $this->getMockBuilder(Uploadfile::class)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->getMock();
+        $uploadFile->expects($this->any())
+            ->method('file')
+            ->willThrowException(new Exception($messageError));
+
+        $response = $uploadController->upload($uploadFile)->getData();
+
+        $this->assertIsString($response->message);
+        $this->assertEquals($messageError, $response->message);
     }
 }

@@ -17,11 +17,11 @@ class UploadController extends Controller
             ProcessFilesJob::dispatch(storage_path('app/files/').$file->hashName())->onQueue('process_files');
 
             return response()->json([
-                $file->hashName()
+                $file->getClientOriginalName()
             ]);
         } catch(Exception $error) {
             return response()->json([
-                $error->getMessage()
+                'message' => $error->getMessage()
             ]);
         }
     }
