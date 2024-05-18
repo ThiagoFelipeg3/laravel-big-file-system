@@ -7,7 +7,6 @@ use App\Http\Requests\Uploadfile;
 use App\Jobs\ProcessFilesJob;
 use Exception;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
