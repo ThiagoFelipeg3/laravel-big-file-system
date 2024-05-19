@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Service\ProcessFilesService;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
 use PHPUnit\Framework\TestCase;
 
 
