@@ -1,8 +1,8 @@
-# Processar um grande arquivo CSV (Big File)
+# Processar um arquivo CSV com mais de 1 milhão de linhas (Big File CSV)
 
 Este projeto apresenta uma forma simples de processar um arquivo grande com milhões de registros.
 
-Para isso é utilizado processos assincronos, basicamento ao realizar uma requisição para rota /api/upload o arquivo é salvo e processado em segundo plano, tudo a partir do controller UploadController.
+Para isso é utilizado processos assíncronos, basicamento ao realizar uma requisição para rota /api/upload o arquivo é salvo e processado em segundo plano, tudo a partir do controller UploadController.
 
 ### Ponto de melhorias
 
@@ -16,3 +16,13 @@ Para isso é utilizado processos assincronos, basicamento ao realizar uma requis
 ```
 docker compose up -d
 ```
+
+### cURL para upload
+
+```
+curl --location 'http://localhost:8000/api/upload' \
+--form 'file=@"input.csv"'
+```
+
+O arquivo utilizado para o teste esta no diretório /test-files/index.csv
+test-files/input.csv
